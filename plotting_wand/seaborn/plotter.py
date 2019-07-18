@@ -1,24 +1,21 @@
 import seaborn as sns
 
-from plotting_wand.seaborn.data_processing import merge_data_into_df
+from plotting_wand.seaborn.data_processing import build_dataframe
 
 
 def plot(data=None, layout=None, **kwargs):
     # Get the API method
-    api = kwargs.get('api', 'relplot')
+    api = kwargs.pop('api', 'relplot')
 
-    # Remove API from keyworded arguments
-    kwargs.pop('api', None)
+    # Build a dataframe
+    data = build_dataframe(data)
 
-    # Merge data into a DataFrame
-    data = merge_data_into_df(data)
-
-    # Call the corresponding API method and return the corresponding graph
+    # Call the corresponding API function and return the corresponding graph
     # object
     if api == 'relplot':
         return relplot(data, **kwargs)
     else:
-        raise ValueError('Unsupported API "{}"'.format(api))
+        raise ValueError('Unsupported API function "{}"'.format(api))
 
 
 def relplot(data, **kwargs):

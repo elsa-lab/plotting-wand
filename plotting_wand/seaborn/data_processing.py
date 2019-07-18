@@ -1,7 +1,7 @@
 import pandas as pd
 
 
-def merge_data_into_df(data):
+def build_dataframe(data):
     # Initialize a list of transformed DataFrames
     transformed_dfs = []
 

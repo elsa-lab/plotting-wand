@@ -1,31 +1,34 @@
 import plotly
 import plotly.graph_objects as go
 
+from plotting_wand.utilities.attributes import nested_getattr
+
 
 def plot(data=None, layout=None, **kwargs):
     # Get the API method
-    api = kwargs.get('api', 'io.show')
+    api = kwargs.pop('api', 'io.show')
 
-    # Remove API from keyworded arguments
-    kwargs.pop('api', None)
+    # Get the API function
+    fn = nested_getattr(plotly, api)
 
+    # Build the figure object
+    fig = build_figure_object(data, layout)
+
+    # Call the API function and return the figure object
+    return call_plotting_function(fn, fig, **kwargs)
+
+
+def build_figure_object(data, layout):
     # Build the figure data
     fig_data = {'data': data, 'layout': layout}
 
-    # Create a Figure
-    fig = go.Figure(fig_data)
-
-    # Call the corresponding API method and return the corresponding graph
-    # object
-    if api == 'io.show':
-        return io_show(fig, **kwargs)
-    else:
-        raise ValueError('Unsupported API "{}"'.format(api))
+    # Build a figure object and return
+    return go.Figure(fig_data)
 
 
-def io_show(fig, **kwargs):
-    # Display the figure
-    plotly.io.show(fig, **kwargs)
+def call_plotting_function(fn, fig, **kwargs):
+    # Call the function
+    fn(fig, **kwargs)
 
-    # Return the figure
+    # Return the figure object
     return fig
