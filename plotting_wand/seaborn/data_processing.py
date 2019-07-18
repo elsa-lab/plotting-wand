@@ -1,5 +1,7 @@
 import pandas as pd
 
+from plotting_wand.utilities.logging import warn
+
 
 def build_dataframe(data):
     # Initialize a list of transformed DataFrames
@@ -24,8 +26,12 @@ def build_dataframe(data):
 
 
 def transform_trace_data(df_data, trace_idx, trace_data):
+    # Set various data
     set_x_and_y(df_data, trace_data)
     set_name(df_data, trace_idx, trace_data)
+
+    # Warn unused attributes
+    warn_unused_attributes(trace_idx, trace_data)
 
 
 def set_name(df_data, trace_idx, trace_data):
@@ -33,7 +39,7 @@ def set_name(df_data, trace_idx, trace_data):
     default_trace_name = '<Trace {}>'.format(trace_idx)
 
     # Get the name of the trace
-    name = trace_data.get('name', default_trace_name)
+    name = trace_data.pop('name', default_trace_name)
 
     # Set the name in the DataFrame data
     df_data['name'] = name
@@ -41,8 +47,17 @@ def set_name(df_data, trace_idx, trace_data):
 
 def set_x_and_y(df_data, trace_data):
     # Get the X and Y
-    x = trace_data.get('x', None)
-    y = trace_data.get('y', None)
+    x = trace_data.pop('x', None)
+    y = trace_data.pop('y', None)
 
     # Set the X and Y in the DataFrame data
     df_data.update({'x': x, 'y': y})
+
+
+def warn_unused_attributes(trace_idx, trace_data):
+    # Get unused attribute names
+    unused = list(trace_data.keys())
+
+    # Warn about the unused attributes
+    warn('Warning: Unused attributes {} in trace data[{}]'.format(
+        unused, trace_idx))
