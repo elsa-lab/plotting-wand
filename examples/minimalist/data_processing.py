@@ -1,8 +1,17 @@
+import pathlib
+
 import pandas as pd
 
 
 def read_file():
-    return pd.read_csv('examples/datasets/insurance.csv')
+    # Set the relative path to the parent folder of this file
+    dataset_path = '../datasets/insurance.csv'
+
+    # Get the dataset path
+    dataset_path = pathlib.Path(__file__).parent / pathlib.Path(dataset_path)
+
+    # Read CSV file and return the contents
+    return pd.read_csv(str(dataset_path))
 
 
 def build_plotting_data(file_data):
