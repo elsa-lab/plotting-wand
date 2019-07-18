@@ -25,6 +25,10 @@ kaggle datasets download -d neuromusic/avocado-prices -p $DOWNLOAD_DIR
 # https://www.kaggle.com/mirichoi0218/insurance
 kaggle datasets download -d mirichoi0218/insurance -p $DOWNLOAD_DIR
 
+# Historical Hourly Weather Data 2012-2017 (Download only "temperature.csv")
+# https://www.kaggle.com/selfishgene/historical-hourly-weather-data
+kaggle datasets download -d selfishgene/historical-hourly-weather-data -f temperature.csv -p $DOWNLOAD_DIR
+
 ################################################################################
 # Unzip
 ################################################################################
