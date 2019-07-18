@@ -145,6 +145,7 @@ setup(
     # https://packaging.python.org/en/latest/requirements.html
     install_requires=[
         'matplotlib>=3.0.0',
+        'numpy>=1.6.0',
         'pandas>=0.13.0',
         'plotly>=3.2.0',
         'seaborn>=0.9.0',
