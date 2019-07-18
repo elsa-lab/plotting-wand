@@ -4,16 +4,16 @@ from plotting_wand.plotly.plotter import plot as plotly_plot
 from plotting_wand.seaborn.plotter import plot as seaborn_plot
 
 
-def plot(data, library='seaborn', **kwargs):
+def plot(data=None, layout=None, library='seaborn', **kwargs):
     # Wrap the data as list
     data = _wrap_data_as_list(data)
 
     # Call the corresponding plot function and return the corresponding graph
     # object
     if library == 'plotly':
-        return plotly_plot(data, **kwargs)
+        return plotly_plot(data=data, layout=layout, **kwargs)
     elif library == 'seaborn':
-        return seaborn_plot(data, **kwargs)
+        return seaborn_plot(data=data, layout=layout, **kwargs)
     else:
         raise ValueError('Unknown library "{}"'.format(library))
 

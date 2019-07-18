@@ -3,7 +3,7 @@ import seaborn as sns
 from plotting_wand.seaborn.data_processing import merge_data_into_df
 
 
-def plot(data, **kwargs):
+def plot(data=None, layout=None, **kwargs):
     # Get the API method
     api = kwargs.get('api', 'relplot')
 
