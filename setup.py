@@ -144,10 +144,10 @@ setup(
     # For an analysis of "install_requires" vs pip's requirements files see:
     # https://packaging.python.org/en/latest/requirements.html
     install_requires=[
-        'matplotlib',
-        'pandas',
-        'plotly',
-        'seaborn',
+        'matplotlib>=3.0.0',
+        'pandas>=0.13.0',
+        'plotly>=3.2.0',
+        'seaborn>=0.9.0',
     ],  # Optional
 
     # List additional groups of dependencies here (e.g. development
