@@ -14,14 +14,14 @@ def read_file():
     return pd.read_csv(str(dataset_path))
 
 
-def build_plotting_data(file_data):
+def build_data(contents):
     # Set age as X data
-    x = file_data['age']
+    x = contents['age']
 
     # Set charges price as Y data
-    y = file_data['charges']
+    y = contents['charges']
 
-    # Build the plotting data
+    # Build the data
     data = {
         'type': 'scatter',
         'x': x,
@@ -29,5 +29,5 @@ def build_plotting_data(file_data):
         'mode': 'markers',
     }
 
-    # Return the plotting data
+    # Return the data
     return data

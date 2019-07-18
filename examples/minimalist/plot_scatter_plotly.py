@@ -1,17 +1,17 @@
 from plotting_wand.plotter import plot
 
-from examples.minimalist.data_processing import read_file, build_plotting_data
+from examples.minimalist.data_processing import read_file, build_data
 
 
 def main():
-    # Read the file data
-    file_data = read_file()
+    # Read the file contents
+    contents = read_file()
 
-    # Build the plotting data
-    plotting_data = build_plotting_data(file_data)
+    # Build the data
+    data = build_data(contents)
 
     # Plot the data
-    plot(data=plotting_data, library='plotly', renderer='browser')
+    plot(data=data, renderer='browser')
 
 
 if __name__ == '__main__':

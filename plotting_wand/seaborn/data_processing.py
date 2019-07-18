@@ -59,5 +59,5 @@ def warn_unused_attributes(trace_idx, trace_data):
     unused = list(trace_data.keys())
 
     # Warn about the unused attributes
-    warn('Warning: Unused attributes {} in trace data[{}]'.format(
+    warn('Warning: Unused attributes {} in trace data [{}]'.format(
         unused, trace_idx))
