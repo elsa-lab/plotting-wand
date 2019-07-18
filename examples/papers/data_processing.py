@@ -62,7 +62,21 @@ def build_data(contents):
 
 def build_layout():
     # Build the layout
-    layout = {}
+    layout = {
+        'title': {
+            'text': 'City Temperatures',
+        },
+        'xaxis': {
+            'title': {
+                'text': 't',
+            },
+        },
+        'yaxis': {
+            'title': {
+                'text': r'$^{\circ}C$',
+            },
+        },
+    }
 
     # Return the layout
     return layout
