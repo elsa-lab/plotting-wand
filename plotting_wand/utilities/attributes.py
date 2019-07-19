@@ -28,7 +28,8 @@ def deep_pop(obj, path, default=None):
             # Try to access the child object
             obj = obj[attr]
         except:
-            raise ValueError('The path does not exist: {}'.format(path))
+            # Return the default value
+            return default
 
     # Get the last attribute
     last_attr = attrs[-1]

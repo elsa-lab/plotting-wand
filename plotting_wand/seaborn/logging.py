@@ -4,8 +4,8 @@ from plotting_wand.utilities.logging import warn
 
 
 def warn_unused_trace_data(trace_idx, trace_data):
-    # Skip the warning if the data is empty
-    if len(trace_data) <= 0:
+    # Skip the warning if the data is none or empty
+    if trace_data is None or len(trace_data) <= 0:
         return
 
     # Convert the trace data to JSON
@@ -17,8 +17,8 @@ def warn_unused_trace_data(trace_idx, trace_data):
 
 
 def warn_unused_layout(layout):
-    # Skip the warning if the data is empty
-    if len(layout) <= 0:
+    # Skip the warning if the data is none or empty
+    if layout is None or len(layout) <= 0:
         return
 
     # Convert the layout to JSON
