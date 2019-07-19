@@ -26,12 +26,31 @@ def build_dataframe(data):
 
 
 def transform_trace_data(df_data, trace_idx, trace_data):
+    # Convert trace data to dict
+    trace_data = convert_trace_data_to_dict(trace_data)
+
     # Set various data
     set_x_and_y(df_data, trace_data)
     set_name(df_data, trace_idx, trace_data)
 
     # Warn unused attributes
     warn_unused_attributes(trace_idx, trace_data)
+
+
+def convert_trace_data_to_dict(trace_data):
+    try:
+        return trace_data.to_plotly_json()
+    except:
+        return trace_data
+
+
+def set_x_and_y(df_data, trace_data):
+    # Get the X and Y
+    x = trace_data.pop('x', None)
+    y = trace_data.pop('y', None)
+
+    # Set the X and Y in the DataFrame data
+    df_data.update({'x': x, 'y': y})
 
 
 def set_name(df_data, trace_idx, trace_data):
@@ -43,15 +62,6 @@ def set_name(df_data, trace_idx, trace_data):
 
     # Set the name in the DataFrame data
     df_data['name'] = name
-
-
-def set_x_and_y(df_data, trace_data):
-    # Get the X and Y
-    x = trace_data.pop('x', None)
-    y = trace_data.pop('y', None)
-
-    # Set the X and Y in the DataFrame data
-    df_data.update({'x': x, 'y': y})
 
 
 def warn_unused_attributes(trace_idx, trace_data):

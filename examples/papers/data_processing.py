@@ -41,8 +41,8 @@ def build_data(contents):
         # Smooth the temperatures
         smoothed_temperatures = smooth(temperatures, window=10)
 
-        # Convert the temperature to Celsius
-        temperature_in_c = smoothed_temperatures - 273.15
+        # Convert the temperatures to Celsius
+        temperatures_in_c = smoothed_temperatures - 273.15
 
         # Build the trace data
         trace_data = {
@@ -50,7 +50,7 @@ def build_data(contents):
             'name': column_name,
             'type': 'scattergl',  # See https://plot.ly/python/webgl-vs-svg/
             'x': x,
-            'y': temperature_in_c,
+            'y': temperatures_in_c,
         }
 
         # Add to the list
