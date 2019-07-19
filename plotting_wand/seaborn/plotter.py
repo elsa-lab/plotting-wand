@@ -1,6 +1,7 @@
 import seaborn as sns
 
 from plotting_wand.seaborn.data_processing import build_dataframe
+from plotting_wand.seaborn.post_processing import set_layout
 
 
 def plot(data=None, layout=None, **kwargs):
@@ -10,12 +11,17 @@ def plot(data=None, layout=None, **kwargs):
     # Build a dataframe
     data = build_dataframe(data)
 
-    # Call the corresponding API function and return the corresponding graph
-    # object
+    # Call the corresponding API function
     if api == 'relplot':
-        return relplot(data, **kwargs)
+        g = relplot(data, **kwargs)
     else:
         raise ValueError('Unsupported API function "{}"'.format(api))
+
+    # Set the layout
+    set_layout(g, layout)
+
+    # Return the corresponding Seaborn object
+    return g
 
 
 def relplot(data, **kwargs):

@@ -1,6 +1,9 @@
+import copy
+
 import pandas as pd
 
-from plotting_wand.utilities.logging import warn
+from plotting_wand.seaborn.logging import warn_unused_trace_data
+from plotting_wand.utilities.attributes import deep_pop
 
 
 def build_dataframe(data):
@@ -29,12 +32,15 @@ def transform_trace_data(df_data, trace_idx, trace_data):
     # Convert trace data to dict
     trace_data = convert_trace_data_to_dict(trace_data)
 
+    # Clone the trace data
+    trace_data = copy.deepcopy(trace_data)
+
     # Set various data
     set_x_and_y(df_data, trace_data)
     set_name(df_data, trace_idx, trace_data)
 
-    # Warn unused attributes
-    warn_unused_attributes(trace_idx, trace_data)
+    # Warn about unused attributes
+    warn_unused_trace_data(trace_idx, trace_data)
 
 
 def convert_trace_data_to_dict(trace_data):
@@ -46,8 +52,8 @@ def convert_trace_data_to_dict(trace_data):
 
 def set_x_and_y(df_data, trace_data):
     # Get the X and Y
-    x = trace_data.pop('x', None)
-    y = trace_data.pop('y', None)
+    x = deep_pop(trace_data, 'x')
+    y = deep_pop(trace_data, 'y')
 
     # Set the X and Y in the DataFrame data
     df_data.update({'x': x, 'y': y})
@@ -58,16 +64,7 @@ def set_name(df_data, trace_idx, trace_data):
     default_trace_name = '<Trace {}>'.format(trace_idx)
 
     # Get the name of the trace
-    name = trace_data.pop('name', default_trace_name)
+    name = deep_pop(trace_data, 'name', default=default_trace_name)
 
     # Set the name in the DataFrame data
     df_data['name'] = name
-
-
-def warn_unused_attributes(trace_idx, trace_data):
-    # Get unused attribute names
-    unused = list(trace_data.keys())
-
-    # Warn about the unused attributes
-    warn('Warning: Unused attributes {} in trace data [{}]'.format(
-        unused, trace_idx))
