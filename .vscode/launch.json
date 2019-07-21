@@ -19,17 +19,17 @@
             "console": "integratedTerminal"
         },
         {
-            "name": "papers/plot_line_plotly",
+            "name": "prototyping/plot_line_plotly",
             "type": "python",
             "request": "launch",
-            "program": "${workspaceFolder}/examples/papers/plot_line_plotly.py",
+            "program": "${workspaceFolder}/examples/prototyping/plot_line_plotly.py",
             "console": "integratedTerminal"
         },
         {
-            "name": "papers/plot_line_seaborn",
+            "name": "prototyping/plot_line_seaborn",
             "type": "python",
             "request": "launch",
-            "program": "${workspaceFolder}/examples/papers/plot_line_seaborn.py",
+            "program": "${workspaceFolder}/examples/prototyping/plot_line_seaborn.py",
             "console": "integratedTerminal"
         }
     ]

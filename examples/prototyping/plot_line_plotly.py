@@ -1,6 +1,7 @@
 from plotting_wand.plotter import plot
 
-from examples.papers.data_processing import read_file, build_data, build_layout
+from examples.prototyping.data_processing import (
+    read_file, build_data, build_layout)
 
 
 def main():
