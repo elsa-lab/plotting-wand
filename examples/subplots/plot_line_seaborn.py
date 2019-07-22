@@ -1,21 +1,17 @@
 from plotting_wand.plotter import plot, show
 
-from examples.subplots.data_processing import (
-    read_file, build_data, build_layout)
+from examples.subplots.data_processing import read_file, build_figure
 
 
 def main():
     # Read the file contents
-    contents = read_file()
+    df = read_file()
 
-    # Build the data
-    data = build_data(contents)
-
-    # Build the layout
-    layout = build_layout()
+    # Build the figure
+    fig = build_figure(df)
 
     # Plot the data
-    plot(data=data, layout=layout, library='seaborn', kind='line')
+    plot(data=fig.data, layout=fig.layout, library='seaborn', kind='line')
 
     # Show the graph
     show()

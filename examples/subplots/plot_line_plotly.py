@@ -5,10 +5,10 @@ from examples.subplots.data_processing import read_file, build_figure
 
 def main():
     # Read the file contents
-    contents = read_file()
+    df = read_file()
 
     # Build the figure
-    fig = build_figure(contents)
+    fig = build_figure(df)
 
     # Plot the data
     plot(figure=fig, renderer='browser')
