@@ -2,11 +2,15 @@ import seaborn as sns
 
 from plotting_wand.seaborn.data_processing import build_dataframe
 from plotting_wand.seaborn.post_processing import set_layout
+from plotting_wand.utilities.data_types import wrap_data_as_list
 
 
 def plot(data=None, layout=None, **kwargs):
     # Get the API method
     api = kwargs.pop('api', 'relplot')
+
+    # Wrap the data as list
+    data = wrap_data_as_list(data)
 
     # Build a dataframe
     data = build_dataframe(data)
