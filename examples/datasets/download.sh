@@ -17,10 +17,6 @@ rm -f $DOWNLOAD_DIR/*.csv
 # Download
 ################################################################################
 
-# Avocado Prices
-# https://www.kaggle.com/neuromusic/avocado-prices
-kaggle datasets download -d neuromusic/avocado-prices -p $DOWNLOAD_DIR
-
 # Medical Cost Personal Datasets
 # https://www.kaggle.com/mirichoi0218/insurance
 kaggle datasets download -d mirichoi0218/insurance -p $DOWNLOAD_DIR
