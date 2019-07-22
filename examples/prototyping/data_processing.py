@@ -17,15 +17,15 @@ def read_file():
     return pd.read_csv(str(dataset_path))
 
 
-def build_data(contents):
+def build_data(df):
     # Add index as timestep
-    contents['t'] = contents.index
+    df['t'] = df.index
 
     # Downsample the data
-    contents = downsample(contents, 't', interval=100)
+    df = downsample(df, 't', interval=100)
 
     # Set t as X data
-    x = contents['t']
+    x = df['t']
 
     # Set the column names to use for building traces
     column_names = ['Vancouver', 'Los Angeles', 'Jerusalem']
@@ -36,7 +36,7 @@ def build_data(contents):
     # Iterate each column name
     for column_name in column_names:
         # Get the temperature series
-        temperatures = contents[column_name]
+        temperatures = df[column_name]
 
         # Smooth the temperatures
         smoothed_temperatures = smooth(temperatures, window=10)

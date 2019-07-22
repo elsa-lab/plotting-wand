@@ -5,10 +5,10 @@ from examples.minimalist.data_processing import read_file, build_data
 
 def main():
     # Read the file contents
-    contents = read_file()
+    df = read_file()
 
     # Build the data
-    data = build_data(contents)
+    data = build_data(df)
 
     # Plot the data
     plot(data=data, renderer='browser')

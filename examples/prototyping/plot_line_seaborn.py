@@ -6,10 +6,10 @@ from examples.prototyping.data_processing import (
 
 def main():
     # Read the file contents
-    contents = read_file()
+    df = read_file()
 
     # Build the data
-    data = build_data(contents)
+    data = build_data(df)
 
     # Build the layout
     layout = build_layout()

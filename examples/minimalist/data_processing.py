@@ -14,12 +14,12 @@ def read_file():
     return pd.read_csv(str(dataset_path))
 
 
-def build_data(contents):
+def build_data(df):
     # Set age as X data
-    x = contents['age']
+    x = df['age']
 
     # Set charges price as Y data
-    y = contents['charges']
+    y = df['charges']
 
     # Build the data
     data = {

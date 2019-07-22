@@ -1,12 +1,11 @@
 # Plotting Wand
 
-Plot experimental results with commonly used plotting libraries.
+Plot experimental results with Plotly and Seaborn.
 
 ## Features
 
 * Friendly API interface
-* Easily switch between Seaborn and Plotly
-* Commonly used middleware to customize the graph
+* Plotting examples
 
 ## Prerequisites
 
