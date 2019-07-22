@@ -4,6 +4,7 @@ import pandas as pd
 
 from plotting_wand.seaborn.logging import warn_unused_trace_data
 from plotting_wand.utilities.attributes import deep_pop
+from plotting_wand.utilities.data_types import convert_plotly_to_dict
 
 
 def build_dataframe(data):
@@ -30,7 +31,7 @@ def build_dataframe(data):
 
 def transform_trace_data(df_data, trace_idx, trace_data):
     # Convert trace data to dict
-    trace_data = convert_trace_data_to_dict(trace_data)
+    trace_data = convert_plotly_to_dict(trace_data)
 
     # Clone the trace data
     trace_data = copy.deepcopy(trace_data)
@@ -41,13 +42,6 @@ def transform_trace_data(df_data, trace_idx, trace_data):
 
     # Warn about unused attributes
     warn_unused_trace_data(trace_idx, trace_data)
-
-
-def convert_trace_data_to_dict(trace_data):
-    try:
-        return trace_data.to_plotly_json()
-    except:
-        return trace_data
 
 
 def set_x_and_y(df_data, trace_data):

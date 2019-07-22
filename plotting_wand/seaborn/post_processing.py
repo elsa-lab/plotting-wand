@@ -2,9 +2,13 @@ import copy
 
 from plotting_wand.seaborn.logging import warn_unused_layout
 from plotting_wand.utilities.attributes import deep_pop
+from plotting_wand.utilities.data_types import convert_plotly_to_dict
 
 
 def set_layout(g, layout):
+    # Convert the layout to dict
+    layout = convert_plotly_to_dict(layout)
+
     # Clone the layout
     layout = copy.deepcopy(layout)
 

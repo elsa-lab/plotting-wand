@@ -11,3 +11,10 @@ def wrap_data_as_list(data):
         return [data]
     else:
         raise ValueError('Data must be a list, tuple or dict')
+
+
+def convert_plotly_to_dict(plotly_obj):
+    try:
+        return plotly_obj.to_plotly_json()
+    except:
+        return plotly_obj
