@@ -34,7 +34,7 @@ setup(
     # There are some restrictions on what makes a valid project name
     # specification here:
     # https://packaging.python.org/specifications/core-metadata/#name
-    name='plotting-wand',  # Required
+    name='elsa-plotting-wand',  # Required
 
     # Versions should comply with PEP 440:
     # https://www.python.org/dev/peps/pep-0440/
@@ -117,7 +117,7 @@ setup(
     # project page. What does your project relate to?
     #
     # Note that this is a string of words separated by whitespace, not a list.
-    keywords='plotting tool',  # Optional
+    keywords='data-visualization plotting plotly tool',  # Optional
 
     # You can just specify package directories manually here if your project is
     # simple. Or you can use find_packages().
