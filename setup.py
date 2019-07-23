@@ -98,7 +98,7 @@ setup(
         # Indicate who your project is intended for
         'Intended Audience :: Developers',
 
-        'Scientific/Engineering :: Visualization',
+        'Topic :: Scientific/Engineering :: Visualization',
 
         # Pick your license as you wish
         'License :: OSI Approved :: MIT License',
