@@ -1,4 +1,6 @@
-from plotting_wand.plotter import plot, show
+import pathlib
+
+from plotting_wand.plotter import plot, save_image, show
 
 from examples.prototyping.data_processing import (
     read_file, process_data, build_data, build_layout)
@@ -18,10 +20,27 @@ def main():
     layout = build_layout()
 
     # Plot the data
-    plot(data=data, layout=layout, library='seaborn', kind='line')
+    g = plot(data=data, layout=layout, library='seaborn', kind='line')
+
+    # Get the image path
+    image_path = build_image_path()
+
+    # Save the plotting result as image
+    save_image(g, image_path)
 
     # Show the graph
     show()
+
+
+def build_image_path():
+    # Set the relative path to the parent folder of this file
+    image_path = './plot_line_seaborn.png'
+
+    # Build the image path
+    image_path = pathlib.Path(__file__).parent / pathlib.Path(image_path)
+
+    # Return the image path
+    return str(image_path)
 
 
 if __name__ == '__main__':

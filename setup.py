@@ -148,6 +148,8 @@ setup(
         'numpy>=1.6.0',
         'pandas>=0.13.0',
         'plotly>=3.2.0',
+        'psutil',
+        'requests',
         'seaborn>=0.9.0',
     ],  # Optional
 

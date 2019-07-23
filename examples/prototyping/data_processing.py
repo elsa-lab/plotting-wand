@@ -12,13 +12,14 @@ y_column_names = ['Vancouver', 'Los Angeles', 'Jerusalem']
 
 def read_file():
     # Set the relative path to the parent folder of this file
-    dataset_path = '../datasets/temperature.csv'
+    relative_path = '../datasets/temperature.csv'
 
-    # Get the dataset path
-    dataset_path = pathlib.Path(__file__).parent / pathlib.Path(dataset_path)
+    # Build the full dataset path
+    full_path = str(pathlib.Path(__file__).parent /
+                    pathlib.Path(relative_path))
 
     # Read CSV file and return the contents
-    return pd.read_csv(str(dataset_path))
+    return pd.read_csv(full_path)
 
 
 def process_data(df):

@@ -21,6 +21,11 @@ def plot(data=None, layout=None, **kwargs):
     return call_plotting_function(fn, fig, **kwargs)
 
 
+def save_image(fig, path, **kwargs):
+    # Save the image
+    fig.write_image(path, **kwargs)
+
+
 def build_figure_object(data, layout, figure):
     # Check whether to use the figure
     if figure is None:

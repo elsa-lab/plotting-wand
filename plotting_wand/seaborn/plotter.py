@@ -28,5 +28,10 @@ def plot(data=None, layout=None, **kwargs):
     return g
 
 
+def save_image(fig, path, **kwargs):
+    # Save the image
+    fig.savefig(path, **kwargs)
+
+
 def relplot(data, **kwargs):
     return sns.relplot(x='x', y='y', hue='name', data=data, **kwargs)
