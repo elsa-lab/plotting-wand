@@ -23,7 +23,7 @@ def main():
     g = plot(data=data, layout=layout, library='seaborn', kind='line')
 
     # Get the image path
-    image_path = build_image_path()
+    image_path = build_image_path('./images/plot_line_seaborn.py.png')
 
     # Save the plotting result as image
     save_image(g, image_path)
@@ -32,10 +32,7 @@ def main():
     show()
 
 
-def build_image_path():
-    # Set the relative path to the parent folder of this file
-    image_path = './plot_line_seaborn.png'
-
+def build_image_path(image_path):
     # Build the image path
     image_path = pathlib.Path(__file__).parent / pathlib.Path(image_path)
 

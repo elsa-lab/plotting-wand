@@ -16,14 +16,14 @@ def main():
     # Build the figure
     fig = build_figure(df)
 
-    # Plot the data
+    # Show the figure
     fig = plot(figure=fig, renderer='browser')
 
     # Get the image paths
-    png_path = build_image_path('./plot_line_plotly.png')
-    eps_path = build_image_path('./plot_line_plotly.pdf')
+    png_path = build_image_path('./images/plot_line_plotly.py.png')
+    eps_path = build_image_path('./images/plot_line_plotly.py.pdf')
 
-    # Save the plotting result as image
+    # Save the figure as images
     save_image(fig, png_path)
     save_image(fig, eps_path)
 
