@@ -10,18 +10,16 @@ from plotting_wand.helpers.resampling import downsample
 from plotting_wand.helpers.smoothing import smooth
 
 
-# Set the date range for each subplot
-date_ranges = [
-    ['2014-01-01', '2014-12-31'],
-    ['2015-01-01', '2015-12-31'],
-    ['2016-01-01', '2016-12-31'],
-]
+# Set the column name to be used to specify which subplot
+subplot_key = 'year'
 
-# Set the numerical year
-years = [
-    2014,
-    2015,
-    2016,
+# Set the target value of each subplot
+# For example, if df[subplot_key] == '2014', df[df[subplot_key] == '2014'] will
+# be drawn into the first subplot
+subplot_values = [
+    '2014',
+    '2015',
+    '2016',
 ]
 
 # Set the subplot titles
@@ -31,10 +29,15 @@ subplot_titles = [
     'Year: 2016',
 ]
 
-# Set the column names in each subplot
-column_names = ['Phoenix', 'Miami', 'Jerusalem', 'New York', 'Vancouver']
+# Set the column name for all X series
+x_column_name = 'day_of_the_year'
+
+# Set the column names for Y series in each subplot
+# For example, the first series to be drawn is df['Phoenix']
+y_column_names = ['Phoenix', 'Miami', 'Jerusalem', 'New York', 'Vancouver']
 
 # Set the colors for each trace
+# See https://xkcd.com/color/rgb/ for the color names
 trace_colors = [
     to_hex('xkcd:red'),
     to_hex('xkcd:blue'),
@@ -56,8 +59,8 @@ def read_file():
 
 
 def build_figure(df):
-    # Process the contents
-    df = process_contents(df)
+    # Process the data
+    df = process_data(df)
 
     # Create the figure with predefined subplots
     fig = make_subplots(rows=1, cols=3, shared_yaxes=True,
@@ -74,86 +77,112 @@ def build_figure(df):
     return fig
 
 
-def process_contents(df):
+def process_data(df):
+    # Filter the data
+    df = filter_data(df)
+
     # Convert the datetime to Pandas datetime
     df['datetime'] = pd.to_datetime(df['datetime'])
 
-    # Subtract the datetime with 1970/1/1 to get the timedelta
-    timedelta = df['datetime'] - dt.datetime(1970, 1, 1)
+    # Add years to the data
+    add_years_to_data(df)
 
-    # Convert the timedelta to the epochs
-    df['epoch'] = timedelta.dt.total_seconds()
-
-    # Set the numerical year in the dataframe
-    for date_range, year in zip(date_ranges, years):
-        # Get the mask in the range
-        filter_masks = (df['datetime'] >= date_range[0]) & (
-            df['datetime'] < date_range[1])
-
-        # Set the year in the original dataframe
-        df.loc[filter_masks, 'year'] = year
+    # Add days of the year to the data
+    add_days_of_the_year_to_data(df)
 
     # Set the index as timestep
     df['t'] = df.index
 
     # Downsample the data
-    df = downsample(df, 't', interval=100)
+    df = downsample(df, 't', y_column_names, interval=100)
+
+    # Smooth the data
+    smooth_data(df)
+
+    # Convert the temperature to Celsius
+    convert_unit(df)
 
     # Return the processed dataframe
     return df
 
 
-def build_traces(df, fig):
-    # Build trace for each subplot
-    for subplot_idx, year in enumerate(years):
-        # Add the trace data to the current subplot
-        for column_name, trace_color in zip(column_names, trace_colors):
-            # Build the dataframe for the current subplot
-            df_for_subplot = build_dataframe_for_subplot(df, year)
+def filter_data(df):
+    # Initialize the column names to keep
+    keep = ['datetime']
 
-            # Build the trace data for the current column name
-            trace_data = build_trace_data(
-                df_for_subplot, subplot_idx, column_name, trace_color)
+    # Add column names for Y series
+    keep.extend(y_column_names)
+
+    # Keep only the selected columns
+    filtered_df = df[keep]
+
+    # Return a copy
+    return filtered_df.copy()
+
+
+def add_years_to_data(df):
+    # Add years to the new column
+    df['year'] = df['datetime'].dt.year
+
+    # Convert the years to string type
+    df['year'] = df['year'].astype(str)
+
+
+def add_days_of_the_year_to_data(df):
+    # Add days of the year to the new column
+    df['day_of_the_year'] = df['datetime'].dt.dayofyear
+
+
+def smooth_data(df):
+    for column_name in y_column_names:
+        # Get the temperature series
+        temperatures = df[column_name]
+
+        # Smooth the temperatures and save
+        df[column_name] = smooth(temperatures, window=10)
+
+
+def convert_unit(df):
+    for column_name in y_column_names:
+        # Get the temperature series
+        temperatures = df[column_name]
+
+        # Convert the temperatures to Celsius and save
+        df[column_name] = temperatures - 273.15
+
+
+def get_data_for_subplot(df_all, subplot_value):
+    # Get the data matching the subplot value
+    return df_all[df_all[subplot_key] == subplot_value]
+
+
+def build_traces(df_all, fig):
+    # Build traces for each subplot
+    for subplot_idx, subplot_value in enumerate(subplot_values):
+        # Get the data for the current subplot
+        df = get_data_for_subplot(df_all, subplot_value)
+
+        # Add trace for each column name
+        for trace_idx in range(len(y_column_names)):
+            # Build the trace data
+            trace_data = build_trace_data(df, subplot_idx, trace_idx)
 
             # Add the trace data to the subplot
             fig.add_trace(trace_data, row=1, col=(subplot_idx + 1))
 
 
-def build_dataframe_for_subplot(df, year):
-    # Get the contents in the targeted year
-    processed_df = df[df['year'] == year]
+def build_trace_data(df, subplot_idx, trace_idx):
+    # Get the column name for Y series
+    y_column_name = y_column_names[trace_idx]
 
-    # Get the epoch of the first row
-    first_epoch = processed_df.iloc[0]['epoch']
+    # Get the trace color
+    trace_color = trace_colors[trace_idx]
 
-    # Calculate the timedelta in seconds
-    seconds = processed_df['epoch'] - first_epoch
+    # Get the X series
+    x = df[x_column_name]
 
-    # Convert the seconds to days
-    days = seconds / 86400
-
-    # Get a copy of the processed dataframe to avoid SettingWithCopyWarning
-    processed_df = processed_df.copy()
-
-    # Set the days of the year
-    processed_df['day'] = days + 1
-
-    # Return the processed dataframe
-    return processed_df
-
-
-def build_trace_data(df, subplot_idx, column_name, trace_color):
-    # Get the days as X
-    x = df['day']
-
-    # Get the temperature series
-    temperatures = df[column_name]
-
-    # Smooth the temperatures
-    smoothed_temperatures = smooth(temperatures, window=10)
-
-    # Convert the temperatures to Celsius
-    y = smoothed_temperatures - 273.15
+    # Get the Y series
+    y = df[y_column_name]
 
     # Build the trace data
     trace_data = {
@@ -161,7 +190,7 @@ def build_trace_data(df, subplot_idx, column_name, trace_color):
             'color': trace_color,
         },
         'mode': 'lines',
-        'name': column_name,
+        'name': y_column_name,
         # Only show the legend for the first subplot
         'showlegend': (subplot_idx == 0),
         'type': 'scatter',

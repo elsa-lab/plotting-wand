@@ -38,13 +38,6 @@
             "request": "launch",
             "program": "${workspaceFolder}/examples/subplots/plot_line_plotly.py",
             "console": "integratedTerminal"
-        },
-        {
-            "name": "subplots/plot_line_seaborn",
-            "type": "python",
-            "request": "launch",
-            "program": "${workspaceFolder}/examples/subplots/plot_line_seaborn.py",
-            "console": "integratedTerminal"
         }
     ]
 }
