@@ -36,6 +36,7 @@ trace_colors = [
 def build_figure(df):
     # Create the figure with predefined subplots
     fig = make_subplots(rows=1, cols=3, shared_yaxes=True,
+                        horizontal_spacing=0.04, vertical_spacing=0.06,
                         subplot_titles=subplot_titles,
                         x_title='Day of the Year', y_title=r'$^{\circ}C$')
 
@@ -101,15 +102,11 @@ def build_trace_data(df, subplot_idx, trace_idx):
 
 
 def update_layout(fig):
-    # Build the layout data
-    layout = {
-        'title': {
-            'text': 'City Temperatures',
-        },
-    }
-
-    # Update the layout
-    fig.update_layout(layout)
+    # Update the generic layout
+    fig.update_layout(
+        legend=dict(x=1.01, y=1.0),
+        margin=dict(l=5, r=5, t=25, b=5)
+    )
 
     # Update the X axis range
     fig.update_xaxes(range=[38.5, 365])
