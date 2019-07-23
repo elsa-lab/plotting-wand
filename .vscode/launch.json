@@ -8,35 +8,35 @@
             "name": "minimalist/plot_scatter_plotly",
             "type": "python",
             "request": "launch",
-            "program": "${workspaceFolder}/examples/minimalist/plot_scatter_plotly.py",
+            "module": "examples.minimalist.plot_scatter_plotly",
             "console": "integratedTerminal"
         },
         {
             "name": "minimalist/plot_scatter_seaborn",
             "type": "python",
             "request": "launch",
-            "program": "${workspaceFolder}/examples/minimalist/plot_scatter_seaborn.py",
+            "module": "examples.minimalist.plot_scatter_seaborn",
             "console": "integratedTerminal"
         },
         {
             "name": "prototyping/plot_line_plotly",
             "type": "python",
             "request": "launch",
-            "program": "${workspaceFolder}/examples/prototyping/plot_line_plotly.py",
+            "module": "examples.prototyping.plot_line_plotly",
             "console": "integratedTerminal"
         },
         {
             "name": "prototyping/plot_line_seaborn",
             "type": "python",
             "request": "launch",
-            "program": "${workspaceFolder}/examples/prototyping/plot_line_seaborn.py",
+            "program": "examples.prototyping.plot_line_seaborn",
             "console": "integratedTerminal"
         },
         {
             "name": "subplots/plot_line_plotly",
             "type": "python",
             "request": "launch",
-            "program": "${workspaceFolder}/examples/subplots/plot_line_plotly.py",
+            "program": "examples.subplots.plot_line_plotly",
             "console": "integratedTerminal"
         }
     ]
