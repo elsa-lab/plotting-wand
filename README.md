@@ -1,6 +1,8 @@
 # Plotting Wand
 
-Plot experimental results with Plotly and Seaborn.
+Plot experimental results.
+
+This project mainly uses [Plotly](https://plot.ly/python/) configurations and have limited compatibility with [Seaborn](https://seaborn.pydata.org/index.html).
 
 ## Features
 
@@ -20,3 +22,7 @@ Run the following command:
 ```bash
 pip install -e .
 ```
+
+## Examples
+
+To get started, see `examples/minimalist`. For practical usage, see `examples/subplots`.
