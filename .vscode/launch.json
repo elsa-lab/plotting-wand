@@ -29,14 +29,14 @@
             "name": "prototyping/plot_line_seaborn",
             "type": "python",
             "request": "launch",
-            "program": "examples.prototyping.plot_line_seaborn",
+            "module": "examples.prototyping.plot_line_seaborn",
             "console": "integratedTerminal"
         },
         {
             "name": "subplots/plot_line_plotly",
             "type": "python",
             "request": "launch",
-            "program": "examples.subplots.plot_line_plotly",
+            "module": "examples.subplots.plot_line_plotly",
             "console": "integratedTerminal"
         }
     ]
