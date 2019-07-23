@@ -19,17 +19,16 @@ def main():
     # Plot the data
     fig = plot(figure=fig, renderer='browser')
 
-    # Get the image path
-    image_path = build_image_path()
+    # Get the image paths
+    png_path = build_image_path('./plot_line_plotly.png')
+    eps_path = build_image_path('./plot_line_plotly.pdf')
 
     # Save the plotting result as image
-    save_image(fig, image_path)
+    save_image(fig, png_path)
+    save_image(fig, eps_path)
 
 
-def build_image_path():
-    # Set the relative path to the parent folder of this file
-    image_path = './plot_line_plotly.png'
-
+def build_image_path(image_path):
     # Build the image path
     image_path = pathlib.Path(__file__).parent / pathlib.Path(image_path)
 
