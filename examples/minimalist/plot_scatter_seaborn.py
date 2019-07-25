@@ -16,7 +16,7 @@ def main():
     g = plot(data=data, library='seaborn')
 
     # Get the image path
-    image_path = build_image_path('./images/plot_scatter_seaborn.py.png')
+    image_path = build_path('./images/plot_scatter_seaborn.py.png')
 
     # Save the plotting result as image
     save_image(g, image_path)
@@ -25,7 +25,7 @@ def main():
     show()
 
 
-def build_image_path(image_path):
+def build_path(image_path):
     # Build the image path
     image_path = pathlib.Path(__file__).parent / pathlib.Path(image_path)
 

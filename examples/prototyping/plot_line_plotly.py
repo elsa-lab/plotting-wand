@@ -23,13 +23,13 @@ def main():
     fig = plot(data=data, layout=layout, renderer='browser')
 
     # Get the image path
-    image_path = build_image_path('./images/plot_line_plotly.py.png')
+    image_path = build_path('./images/plot_line_plotly.py.png')
 
     # Save the figure as image
     save_image(fig, image_path)
 
 
-def build_image_path(image_path):
+def build_path(image_path):
     # Build the image path
     image_path = pathlib.Path(__file__).parent / pathlib.Path(image_path)
 

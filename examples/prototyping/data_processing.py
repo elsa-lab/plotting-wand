@@ -27,15 +27,15 @@ def process_data(df):
     df['t'] = df.index
 
     # Downsample the data
-    df = downsample(df, 't', y_column_names, interval=100)
+    df = downsample(df, 't', interval=100)
+
+    # Smooth the temperatures
+    df = smooth(df, apply_columns=y_column_names, window=10)
 
     # Process for each target column
     for y_column_name in y_column_names:
         # Get the temperature series
         temperatures = df[y_column_name]
-
-        # Smooth the temperatures and save
-        df[y_column_name] = smooth(temperatures, window=10)
 
         # Convert the temperatures to Celsius and save
         df[y_column_name] = temperatures - 273.15
