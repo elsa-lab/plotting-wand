@@ -31,12 +31,12 @@ def main():
     save_image(fig, eps_path, width=900, height=300, scale=2)
 
 
-def build_path(image_path):
-    # Build the image path
-    image_path = pathlib.Path(__file__).parent / pathlib.Path(image_path)
+def build_path(relative_path):
+    # Build the path object
+    path_obj = pathlib.Path(__file__).parent / pathlib.Path(relative_path)
 
-    # Return the image path
-    return str(image_path)
+    # Return the path
+    return str(path_obj)
 
 
 if __name__ == '__main__':
