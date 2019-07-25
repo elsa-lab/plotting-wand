@@ -150,6 +150,7 @@ setup(
         'plotly>=4.0.0',
         'psutil',
         'requests',
+        'scipy>=0.9.0',
         'seaborn>=0.9.0',
     ],  # Optional
 

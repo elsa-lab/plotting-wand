@@ -2,6 +2,9 @@ from matplotlib.colors import to_hex
 from plotly.subplots import make_subplots
 import plotly.graph_objects as go
 
+from plotting_wand.helpers.layout import reduce_annotations_shifts
+from plotting_wand.helpers.plotting import build_confidence_interval_traces
+
 from examples.subplots.data_processing import (
     subplot_key, x_column_name, y_column_names)
 
@@ -58,11 +61,29 @@ def build_traces(df_all, fig):
 
         # Add trace for each column name
         for trace_idx in range(len(y_column_names)):
-            # Build the trace data
-            trace_data = build_trace_data(df, subplot_idx, trace_idx)
+            # Get the column name for Y series
+            y_column_name = y_column_names[trace_idx]
+
+            # Get the trace color
+            trace_color = trace_colors[trace_idx]
+
+            # Build the legend name
+            legend_name = build_legend_name(subplot_idx, y_column_name)
+
+            # Build confidence interval traces
+            trace_lo, trace_hi, trace_mean = build_confidence_interval_traces(
+                df, x_column_name, y_column_name, legendgroup=y_column_name,
+                line_color=trace_color, name=legend_name)
+
+            # Only show the legend for the first subplot
+            trace_mean.update(showlegend=(subplot_idx == 0))
+
+            # Add confidence interval traces to the subplot
+            fig.add_trace(trace_lo, row=1, col=(subplot_idx + 1))
+            fig.add_trace(trace_hi, row=1, col=(subplot_idx + 1))
 
             # Add the trace data to the subplot
-            fig.add_trace(trace_data, row=1, col=(subplot_idx + 1))
+            fig.add_trace(trace_mean, row=1, col=(subplot_idx + 1))
 
 
 def get_data_for_subplot(df_all, subplot_value):
@@ -70,43 +91,31 @@ def get_data_for_subplot(df_all, subplot_value):
     return df_all[df_all[subplot_key] == subplot_value]
 
 
-def build_trace_data(df, subplot_idx, trace_idx):
-    # Get the column name for Y series
-    y_column_name = y_column_names[trace_idx]
-
-    # Get the trace color
-    trace_color = trace_colors[trace_idx]
-
-    # Get the X series
-    x = df[x_column_name]
-
-    # Get the Y series
-    y = df[y_column_name]
-
-    # Build the trace data
-    trace_data = {
-        'line': {
-            'color': trace_color,
-        },
-        'mode': 'lines',
-        'name': y_column_name,
-        # Only show the legend for the first subplot
-        'showlegend': (subplot_idx == 0),
-        'type': 'scatter',
-        'x': x,
-        'y': y,
-    }
-
-    # Return the trace data
-    return trace_data
+def build_legend_name(subplot_idx, column_name):
+    # Check whether it's the first subplot
+    if subplot_idx == 0:
+        return column_name
+    else:
+        return '{}({})'.format(column_name, subplot_idx)
 
 
 def update_layout(fig):
     # Update the generic layout
     fig.update_layout(
-        legend=dict(x=1.01, y=1.0),
-        margin=dict(l=5, r=5, t=25, b=5)
+        # Set the legend attributes
+        legend=dict(
+            # Set the position of the legend
+            x=1.01,
+            y=1.0,
+            # Set the vertical space between legend groups
+            tracegroupgap=0
+        ),
+        # Set the margins
+        margin=dict(l=40, r=5, t=25, b=40)
     )
 
     # Update the X axis range
-    fig.update_xaxes(range=[38.5, 365])
+    fig.update_xaxes(range=[1, 365])
+
+    # Reduce distances from the axis labels to the subplots
+    reduce_annotations_shifts(fig, factor=0.5)

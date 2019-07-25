@@ -34,6 +34,9 @@ def process_data(df):
     # Filter the data
     df = filter_data(df)
 
+    # Fill NaNs by interpolation
+    df = df.interpolate(limit_direction='both')
+
     # Convert the datetime to Pandas datetime
     df['datetime'] = pd.to_datetime(df['datetime'])
 
@@ -43,17 +46,26 @@ def process_data(df):
     # Add days of the year to the data
     add_days_of_the_year_to_data(df)
 
-    # Set the index as timestep
-    df['t'] = df.index
+    # Add hours to the data
+    add_hours_to_data(df)
+
+    # Split data by hour
+    dfs = split_by_hour(df)
 
     # Downsample the data
-    df = downsample(df, 't', y_column_names, interval=100)
+    dfs = downsample_data(dfs)
 
     # Smooth the data
-    smooth_data(df)
+    smooth_data(dfs)
+
+    # Merge dataframes
+    df = pd.concat(dfs)
 
     # Convert the temperature to Celsius
     convert_unit(df)
+
+    # Clean the data (Optional)
+    df = clean_data(df)
 
     # Return the processed dataframe
     return df
@@ -66,11 +78,8 @@ def filter_data(df):
     # Add column names for Y series
     keep.extend(y_column_names)
 
-    # Keep only the selected columns
-    filtered_df = df[keep]
-
-    # Return a copy
-    return filtered_df.copy()
+    # Keep only the selected columns and return
+    return df[keep]
 
 
 def add_years_to_data(df):
@@ -86,13 +95,48 @@ def add_days_of_the_year_to_data(df):
     df[x_column_name] = df['datetime'].dt.dayofyear
 
 
-def smooth_data(df):
-    for column_name in y_column_names:
-        # Get the temperature series
-        temperatures = df[column_name]
+def add_hours_to_data(df):
+    # Add hours to the new column
+    df['hour'] = df['datetime'].dt.hour
 
-        # Smooth the temperatures and save
-        df[column_name] = smooth(temperatures, window=10)
+
+def split_by_hour(df):
+    # Group by hour
+    grouped = df.groupby('hour')
+
+    # Build each splitted dataframe and return
+    return [group for _, group in grouped]
+
+
+def downsample_data(dfs):
+    # Downsample the data by day of the year and return
+    return [downsample(df, x_column_name,
+                       category_columns=[subplot_key], interval=2)
+            for df in dfs]
+
+
+def smooth_data(dfs):
+    for df in dfs:
+        # Split the series by year
+        grouped_by_year = df.groupby(subplot_key)
+
+        # Initialize the smoothed data
+        smoothed = []
+
+        # Smooth each group
+        for _, group in grouped_by_year:
+            # Smooth the temperatures
+            smoothed_group = smooth(
+                group, apply_columns=y_column_names, window=10)
+
+            # Add to the list
+            smoothed.append(smoothed_group)
+
+        # Merge all smoothed series
+        merged = pd.concat(smoothed)
+
+        # Update the temperature series
+        df.update(merged)
 
 
 def convert_unit(df):
@@ -102,3 +146,14 @@ def convert_unit(df):
 
         # Convert the temperatures to Celsius and save
         df[column_name] = temperatures - 273.15
+
+
+def clean_data(df):
+    # Reorder the columns
+    df = df[['datetime', 'year', 'day_of_the_year', 'hour', *y_column_names]]
+
+    # Sort the values by datetime
+    df = df.sort_values(by=['year', 'day_of_the_year', 'hour'])
+
+    # Reset the index and return
+    return df.reset_index(drop=True)
