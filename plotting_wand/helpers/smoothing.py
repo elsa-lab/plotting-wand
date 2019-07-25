@@ -5,7 +5,7 @@ def smooth(data, apply_columns=None, window=1):
     """ Smooth the data.
 
     Arguments:
-        data (pandas.DataFrame or pandas.Series): Data.
+        data (pandas.DataFrame): Data.
         apply_columns (list of str): List of columns to apply smoothing. If the
             value is "None", all numeric series will be smoothed.
         window (int): Size of the moving window (greater than 0).
@@ -14,8 +14,8 @@ def smooth(data, apply_columns=None, window=1):
         pandas.Series: Smoothed data.
     """
     # Check the type of data
-    if not isinstance(data, pd.DataFrame) and not isinstance(data, pd.Series):
-        raise ValueError('"data" must be a pandas.DataFrame or pandas.Series')
+    if not isinstance(data, pd.DataFrame):
+        raise ValueError('"data" must be a pandas.DataFrame')
 
     # Get numeric columns
     numeric_columns = set(data.select_dtypes(include='number'))
