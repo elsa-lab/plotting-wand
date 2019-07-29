@@ -20,8 +20,8 @@ def smooth(data, apply_columns=None, window=1):
     # Get numeric columns
     numeric_columns = set(data.select_dtypes(include='number'))
 
-    # Set the columns to apply to empty list if it's None
-    apply_columns = apply_columns or []
+    # Set the columns to apply to all columns if it's None
+    apply_columns = apply_columns or data.columns
 
     # Find the intersection with columns to apply
     apply_columns = numeric_columns & set(apply_columns)
