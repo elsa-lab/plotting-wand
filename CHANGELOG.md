@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.3 (2019-07-29)
+
+* Fixed `apply_columns` argument in `helpers.smoothing.smooth` not working when `None` is specified
+
 ## 1.0.2 (2019-07-25)
 
 * Added the confidence interval drawing helper function
