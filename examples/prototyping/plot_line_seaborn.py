@@ -22,11 +22,13 @@ def main():
     # Plot the data
     g = plot(data=data, layout=layout, library='seaborn', kind='line')
 
-    # Get the image path
-    image_path = build_path('./images/plot_line_seaborn.py.png')
+    # Get the image paths
+    png_path = build_path('./images/plot_line_seaborn.py.png')
+    pdf_path = build_path('./images/plot_line_seaborn.py.pdf')
 
     # Save the plotting result as image
-    save_image(g, image_path)
+    save_image(g, png_path)
+    save_image(g, pdf_path)
 
     # Show the graph
     show()

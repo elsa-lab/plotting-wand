@@ -24,11 +24,11 @@ def main():
 
     # Get the image paths
     png_path = build_path('./images/plot_line_plotly.py.png')
-    eps_path = build_path('./images/plot_line_plotly.py.pdf')
+    pdf_path = build_path('./images/plot_line_plotly.py.pdf')
 
     # Save the figure as images
     save_image(fig, png_path, width=900, height=300, scale=2)
-    save_image(fig, eps_path, width=900, height=300, scale=2)
+    save_image(fig, pdf_path, width=900, height=300, scale=2)
 
 
 def build_path(relative_path):
