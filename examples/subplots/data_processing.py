@@ -124,13 +124,8 @@ def smooth_data(dfs):
         smoothed = []
 
         # Smooth each group
-        for _, group in grouped_by_year:
-            # Smooth the temperatures
-            smoothed_group = smooth(
-                group, apply_columns=y_column_names, window=10)
-
-            # Add to the list
-            smoothed.append(smoothed_group)
+        smoothed = [smooth(group, apply_columns=y_column_names, window=10)
+                    for _, group in grouped_by_year]
 
         # Merge all smoothed series
         merged = pd.concat(smoothed)
