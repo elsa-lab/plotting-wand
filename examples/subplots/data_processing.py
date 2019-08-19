@@ -120,9 +120,6 @@ def smooth_data(dfs):
         # Split the series by year
         grouped_by_year = df.groupby(subplot_key)
 
-        # Initialize the smoothed data
-        smoothed = []
-
         # Smooth each group
         smoothed = [smooth(group, apply_columns=y_column_names, window=10)
                     for _, group in grouped_by_year]
