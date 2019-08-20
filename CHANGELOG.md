@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.4 (2019-08-20)
+
+* Fixed NumPy warning raised when the number of Y values is only 1 in `build_confidence_interval_traces` function
+
 ## 1.0.3 (2019-07-29)
 
 * Fixed `apply_columns` argument in `helpers.smoothing.smooth` not working when `None` is specified
