@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.5 (2019-08-20)
+
+* Changed `reduce_annotations_shifts` adjustments to support both X and Y shift adjustments
+
 ## 1.0.4 (2019-08-20)
 
 * Fixed NumPy warning raised when the number of Y values is only 1 in `build_confidence_interval_traces` function
