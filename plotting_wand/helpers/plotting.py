@@ -50,12 +50,20 @@ def build_confidence_interval_traces(
         # Get the Y series
         y = group[y_column]
 
-        # Calculate bounds of confidence interval
+        # Get number of Y values
         num = len(y)
+
+        # Calculate mean Y value
         mean_s = np.mean(y)
-        std_err = st.sem(y)
-        h = std_err * st.t.ppf((1 + ci) / 2, num - 1)
-        lo, hi = mean_s - h, mean_s + h
+
+        # Only calculate bounds of confidence interval when the number of Ys
+        # are more than 1
+        if num > 1:
+            std_err = st.sem(y)
+            h = std_err * st.t.ppf((1 + ci) / 2, num - 1)
+            lo, hi = mean_s - h, mean_s + h
+        else:
+            lo, hi = mean_s, mean_s
 
         # Add X to the list
         xs[idx] = x
