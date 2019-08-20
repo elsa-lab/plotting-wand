@@ -2,7 +2,8 @@ from matplotlib.colors import to_hex
 from plotly.subplots import make_subplots
 import plotly.graph_objects as go
 
-from plotting_wand.helpers.layout import reduce_annotations_shifts
+from plotting_wand.helpers.layout import adjust_annotations_font_sizes
+from plotting_wand.helpers.layout import adjust_annotations_shifts
 from plotting_wand.helpers.plotting import build_confidence_interval_traces
 
 from examples.subplots.data_processing import (
@@ -102,8 +103,14 @@ def build_legend_name(subplot_idx, column_name):
 def update_layout(fig):
     # Update the generic layout
     fig.update_layout(
+        # Set the global font size
+        font=dict(
+            size=12
+        ),
         # Set the legend attributes
         legend=dict(
+            # Set the font size of the legend
+            font=dict(size=12),
             # Set the position of the legend
             x=1.01,
             y=1.0,
@@ -117,5 +124,8 @@ def update_layout(fig):
     # Update the X axis range
     fig.update_xaxes(range=[1, 365])
 
-    # Reduce distances from the axis labels to the subplots
-    reduce_annotations_shifts(fig, x_factor=0.5, y_factor=0.5)
+    # Adjust the font sizes of the annotations
+    adjust_annotations_font_sizes(fig, factor=1.1)
+
+    # Adjust distances from the axis labels to the subplots
+    adjust_annotations_shifts(fig, x_factor=0.5, y_factor=0.5)
