@@ -118,4 +118,4 @@ def update_layout(fig):
     fig.update_xaxes(range=[1, 365])
 
     # Reduce distances from the axis labels to the subplots
-    reduce_annotations_shifts(fig, factor=0.5)
+    reduce_annotations_shifts(fig, x_factor=0.5, y_factor=0.5)
