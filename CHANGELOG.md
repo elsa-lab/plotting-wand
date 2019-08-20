@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.6 (2019-08-20)
+
+* Renamed `reduce_annotations_shifts` to `adjust_annotations_shifts`
+* Added `helpers.layout.adjust_annotations_font_sizes` function to adjust annotations font sizes
+
 ## 1.0.5 (2019-08-20)
 
 * Changed `reduce_annotations_shifts` adjustments to support both X and Y shift adjustments
